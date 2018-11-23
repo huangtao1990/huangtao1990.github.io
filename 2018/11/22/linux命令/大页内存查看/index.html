@@ -6,16 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Category: 网络编程 | 一只小蚂蚁</title>
+  <title>大页内存查看 | 一只小蚂蚁</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="keywords" content="LNMPR">
-<meta property="og:type" content="website">
-<meta property="og:title" content="一只小蚂蚁">
-<meta property="og:url" content="http://yoursite.com/categories/网络编程/index.html">
+  <meta name="description" content="##buddy算法 ###Buddy（伙伴的定义）： 这里给出伙伴的概念，满足以下三个条件的称为伙伴：1231）两个块大小相同；2）两个块地址连续；3）两个块必须是同一个大块中分离出来的； ###Buddy算法的分配原理：  假如系统需要4(22)个页面大小的内存块，该算法就到free_area[2]中查找，如果链表中有空闲块，就直接从中摘下并分配出去。如果没有，算法将顺着数组向上查找free_a">
+<meta name="keywords" content="LNMPR">
+<meta property="og:type" content="article">
+<meta property="og:title" content="大页内存查看">
+<meta property="og:url" content="http://yoursite.com/2018/11/22/linux命令/大页内存查看/index.html">
 <meta property="og:site_name" content="一只小蚂蚁">
+<meta property="og:description" content="##buddy算法 ###Buddy（伙伴的定义）： 这里给出伙伴的概念，满足以下三个条件的称为伙伴：1231）两个块大小相同；2）两个块地址连续；3）两个块必须是同一个大块中分离出来的； ###Buddy算法的分配原理：  假如系统需要4(22)个页面大小的内存块，该算法就到free_area[2]中查找，如果链表中有空闲块，就直接从中摘下并分配出去。如果没有，算法将顺着数组向上查找free_a">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/2018/11/22/linux命令/大页内存查看/source/_posts/images/1.jpg">
+<meta property="og:updated_time" content="2018-11-23T07:52:19.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="一只小蚂蚁">
+<meta name="twitter:title" content="大页内存查看">
+<meta name="twitter:description" content="##buddy算法 ###Buddy（伙伴的定义）： 这里给出伙伴的概念，满足以下三个条件的称为伙伴：1231）两个块大小相同；2）两个块地址连续；3）两个块必须是同一个大块中分离出来的； ###Buddy算法的分配原理：  假如系统需要4(22)个页面大小的内存块，该算法就到free_area[2]中查找，如果链表中有空闲块，就直接从中摘下并分配出去。如果没有，算法将顺着数组向上查找free_a">
+<meta name="twitter:image" content="http://yoursite.com/2018/11/22/linux命令/大页内存查看/source/_posts/images/1.jpg">
   
     <link rel="alternative" href="/atom.xml" title="一只小蚂蚁" type="application/atom+xml">
   
@@ -169,98 +175,179 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-linux命令/大页内存查看" class="article article-type-post " itemscope="" itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/11/14/netprogram/UNIX域协议-无名套接字/" class="archive-article-date">
-  	<time datetime="2018-11-14T10:20:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-14</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/11/14/netprogram/UNIX域协议-无名套接字/">无名套接字</a>
+    <h1 class="article-title" itemprop="name">
+      大页内存查看
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
+        
+        <a href="/2018/11/22/linux命令/大页内存查看/" class="archive-article-date">
+  	<time datetime="2018-11-22T06:20:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-22</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>##buddy算法</p>
+<p>###Buddy（伙伴的定义）：</p>
+<p>这里给出伙伴的概念，满足以下三个条件的称为伙伴：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1）两个块大小相同；</span><br><span class="line">2）两个块地址连续；</span><br><span class="line">3）两个块必须是同一个大块中分离出来的；</span><br></pre></td></tr></table></figure></p>
+<p>###Buddy算法的分配原理：</p>
+<blockquote>
+<p>假如系统需要4(2<em>2)个页面大小的内存块，该算法就到free_area[2]中查找，如果链表中有空闲块，就直接从中摘下并分配出去。如果没有，算法将顺着数组向上查找free_area[3],如果free_area[3]中有空闲块，则将其从链表中摘下，分成等大小的两部分，前四个页面作为一个块插入free_area[2]，后4个页面分配出去，free_area[3]中也没有，就再向上查找，如果free_area[4]中有，就将这16(2</em>2<em>2</em>2)个页面等分成两份，前一半挂如free_area[3]的链表头部，后一半的8个页等分成两等分，前一半挂free_area[2]<br>的链表中，后一半分配出去。假如free_area[4]也没有，则重复上面的过程，知道到达free_area数组的最后，如果还没有则放弃分配。</p>
+</blockquote>
+<p>###Buddy算法的释放原理：</p>
+<p>内存的释放是分配的逆过程，也可以看作是伙伴的合并过程。当释放一个块时，先在其对应的链表中考查是否有伙伴存在，如果没有伙伴块，就直接把要释放的块挂入链表头；如果有，则从链表中摘下伙伴，合并成一个大块，然后继续考察合并后的块在更大一级链表中是否有伙伴存在，直到不能合并或者已经合并到了最大的块(2<em>2</em>2<em>2</em>2<em>2</em>2<em>2</em>2个页面)。<br><img src="./source/_posts/images/1.jpg" alt="image"></p>
+<p>##linux应用</p>
+<blockquote>
+<p>在linux中使用buddy算法解决物理内存的外碎片问题，其把所有空闲的内存，以2的幂次方的形式，分成11个块链表，分别对应为1、2、4、8、16、32、64、128、256、512、102个页块</p>
+</blockquote>
+<p>###</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/网络编程//" class="article-tag-list-link color5">网络编程</a>
+        			<a href="/categories/linux命令//" class="article-tag-list-link color3">linux命令</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2018/11/22/linux命令/大页内存查看/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/11/14/netprogram/UNIX域协议-命名套接字/" class="archive-article-date">
-  	<time datetime="2018-11-14T10:20:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-14</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2018/11/16/nginx/nginx的锁/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">锁在nginx中应用</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/11/14/netprogram/UNIX域协议-命名套接字/">命名套接字</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/网络编程//" class="article-tag-list-link color5">网络编程</a>
-        		</li>
-      		
-		</ul>
-	</div>
+        
+        
+    </div>
+</aside>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+
+  
+  <div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="linux命令/大页内存查看" data-title="大页内存查看" data-url="http://yoursite.com/2018/11/22/linux命令/大页内存查看/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
   
   
-    </div></section>
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -283,10 +370,10 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
-		isCategory: true,
+		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
 		root: "/",

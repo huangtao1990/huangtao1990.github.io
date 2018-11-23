@@ -171,6 +171,93 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-linux命令/大页内存查看" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/22/linux命令/大页内存查看/">大页内存查看</a>
+    </h1>
+  
+
+        
+        <a href="/2018/11/22/linux命令/大页内存查看/" class="archive-article-date">
+  	<time datetime="2018-11-22T06:20:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-22</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>##buddy算法</p>
+<p>###Buddy（伙伴的定义）：</p>
+<p>这里给出伙伴的概念，满足以下三个条件的称为伙伴：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1）两个块大小相同；</span><br><span class="line">2）两个块地址连续；</span><br><span class="line">3）两个块必须是同一个大块中分离出来的；</span><br></pre></td></tr></table></figure></p>
+<p>###Buddy算法的分配原理：</p>
+<blockquote>
+<p>假如系统需要4(2<em>2)个页面大小的内存块，该算法就到free_area[2]中查找，如果链表中有空闲块，就直接从中摘下并分配出去。如果没有，算法将顺着数组向上查找free_area[3],如果free_area[3]中有空闲块，则将其从链表中摘下，分成等大小的两部分，前四个页面作为一个块插入free_area[2]，后4个页面分配出去，free_area[3]中也没有，就再向上查找，如果free_area[4]中有，就将这16(2</em>2<em>2</em>2)个页面等分成两份，前一半挂如free_area[3]的链表头部，后一半的8个页等分成两等分，前一半挂free_area[2]<br>的链表中，后一半分配出去。假如free_area[4]也没有，则重复上面的过程，知道到达free_area数组的最后，如果还没有则放弃分配。</p>
+</blockquote>
+<p>###Buddy算法的释放原理：</p>
+<p>内存的释放是分配的逆过程，也可以看作是伙伴的合并过程。当释放一个块时，先在其对应的链表中考查是否有伙伴存在，如果没有伙伴块，就直接把要释放的块挂入链表头；如果有，则从链表中摘下伙伴，合并成一个大块，然后继续考察合并后的块在更大一级链表中是否有伙伴存在，直到不能合并或者已经合并到了最大的块(2<em>2</em>2<em>2</em>2<em>2</em>2<em>2</em>2个页面)。<br><img src="./source/_posts/images/1.jpg" alt="image"></p>
+<p>##linux应用</p>
+<blockquote>
+<p>在linux中使用buddy算法解决物理内存的外碎片问题，其把所有空闲的内存，以2的幂次方的形式，分成11个块链表，分别对应为1、2、4、8、16、32、64、128、256、512、102个页块</p>
+</blockquote>
+<p>###</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/linux命令//" class="article-tag-list-link color3">linux命令</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/11/22/linux命令/大页内存查看/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-nginx/nginx的锁" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
@@ -336,6 +423,103 @@
 
 
   
+    <article id="post-netprogram/UNIX域协议-无名套接字" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/14/netprogram/UNIX域协议-无名套接字/">无名套接字</a>
+    </h1>
+  
+
+        
+        <a href="/2018/11/14/netprogram/UNIX域协议-无名套接字/" class="archive-article-date">
+  	<time datetime="2018-11-14T10:20:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-14</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="1-socketpair函数"><a href="#1-socketpair函数" class="headerlink" title="1.socketpair函数"></a>1.socketpair函数</h3><p>先看man手册：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">SYNOPSIS</span><br><span class="line">       #include &lt;sys/types.h&gt;          /* See NOTES */</span><br><span class="line">       #include &lt;sys/socket.h&gt;</span><br><span class="line"></span><br><span class="line">       int socketpair(int domain, int type, int protocol, int sv[2]);</span><br><span class="line"></span><br><span class="line">DESCRIPTION</span><br><span class="line">       The  socketpair()  call creates an unnamed pair of connected sockets in</span><br><span class="line">       the specified domain, of the specified type, and using  the  optionally</span><br><span class="line">       specified  protocol.   For  further  details  of  these  arguments, see</span><br><span class="line">       socket(2).</span><br><span class="line"></span><br><span class="line">       The descriptors used in referencing the new  sockets  are  returned  in</span><br><span class="line">       sv[0] and sv[1].  The two sockets are indistinguishable.</span><br><span class="line"></span><br><span class="line">RETURN VALUE</span><br><span class="line">       On  success,  zero is returned.  On error, -1 is returned, and errno is</span><br><span class="line">       set appropriately.</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>功能：创建一个全双工的流管道<br>参数：<br>domain：协议家族，为AF_LOCAL或AF_UNIX<br>type：套接字类型。可以是SOCK_STREAM或者SOCK_DGRAM。这两种都是可靠的<br>protocol：协议类型。为0<br>sv：返回套接字对，这个是输出参数。返回的两个描述符都是可读可写的。<br>返回值：成功返回0，失败返回-1.<br>补充：pipe创建的匿名管道的半双工的，pipefd[0]用于读，pipefd[1]用于写。<br>注意：由于创建的每个套接字都是没有名字的，这就意味着无关进程不能使用它们。</p>
+</blockquote>
+<h3 id="2-一个简单的例子："><a href="#2-一个简单的例子：" class="headerlink" title="2.一个简单的例子："></a>2.一个简单的例子：</h3><p>父进程给子进程发送一个数据给子进程，子进程收到数据后最数据进行加一操作，再发回给父进程。</p>
+<p>先上自己的一个头文件：<br>comm.h</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#ifndef __COMM_H__</span><br><span class="line">#define __COMM_H__</span><br><span class="line"></span><br><span class="line">#include&lt;errno.h&gt;</span><br><span class="line">#include&lt;stdlib.h&gt;</span><br><span class="line">#define ERR_EXIT(m) \</span><br><span class="line">    do \</span><br><span class="line">    &#123; \</span><br><span class="line">        perror(m); \</span><br><span class="line">        exit(EXIT_FAILURE); \</span><br><span class="line">    &#125; while(0)</span><br><span class="line"></span><br><span class="line">#endif // __COMM_H__</span><br></pre></td></tr></table></figure>
+<p>再上主程序：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">#include&lt;unistd.h&gt;</span><br><span class="line">#include &lt;sys/types.h&gt;          /* See NOTES */</span><br><span class="line">#include &lt;sys/socket.h&gt;</span><br><span class="line"></span><br><span class="line">#include&quot;comm.h&quot;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    int sockfds[2];</span><br><span class="line">    if(socketpair(PF_UNIX, SOCK_STREAM, 0, sockfds) &lt; 0)    </span><br><span class="line">        ERR_EXIT(&quot;sockerpair&quot;);</span><br><span class="line"></span><br><span class="line">    pid_t pid;</span><br><span class="line">    pid = fork();</span><br><span class="line">    if(pid &lt; 0)</span><br><span class="line">        ERR_EXIT(&quot;fork&quot;);</span><br><span class="line">    else if(pid &gt; 0)</span><br><span class="line">    &#123;</span><br><span class="line">        int val = 0;</span><br><span class="line">        close(sockfds[1]);</span><br><span class="line">        while(1)</span><br><span class="line">        &#123;</span><br><span class="line">            ++val;</span><br><span class="line">            printf(&quot;Sending data: %d\n&quot;, val);</span><br><span class="line">            write(sockfds[0], &amp;val, sizeof(val));</span><br><span class="line">            read(sockfds[0], &amp;val, sizeof(val));</span><br><span class="line">            printf(&quot;   Recv data: %d\n&quot;, val);</span><br><span class="line">            sleep(1);</span><br><span class="line">        &#125;    </span><br><span class="line">    &#125;</span><br><span class="line">    else</span><br><span class="line">    &#123;</span><br><span class="line">        close(sockfds[0]);</span><br><span class="line">        int val;</span><br><span class="line">        while(1)</span><br><span class="line">        &#123;</span><br><span class="line">            read(sockfds[1], &amp;val, sizeof(val));</span><br><span class="line">            ++val;</span><br><span class="line">            write(sockfds[1], &amp;val, sizeof(val));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">@xcy-virtual-machine:~/test/sock14_socketpair$ ./sockpair </span><br><span class="line">Sending data: 1</span><br><span class="line">   Recv data: 2</span><br><span class="line">Sending data: 3</span><br><span class="line">   Recv data: 4</span><br><span class="line">Sending data: 5</span><br><span class="line">   Recv data: 6</span><br><span class="line">Sending data: 7</span><br><span class="line">   Recv data: 8</span><br><span class="line">Sending data: 9</span><br><span class="line">   Recv data: 10</span><br><span class="line">Sending data: 11</span><br><span class="line">   Recv data: 12</span><br><span class="line">Sending data: 13</span><br><span class="line">   Recv data: 14</span><br></pre></td></tr></table></figure>
+<h3 id="3-UNIX域传递文件描述符"><a href="#3-UNIX域传递文件描述符" class="headerlink" title="3.UNIX域传递文件描述符"></a>3.UNIX域传递文件描述符</h3><p>需要用到sendmsg和recvmsg函数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;sys/types.h&gt;</span><br><span class="line">#include &lt;sys/socket.h&gt;</span><br><span class="line">ssize_t sendmsg(int sockfd, const struct msghdr *msg, int flags);</span><br><span class="line">ssize_t recvmsg(int sockfd, struct msghdr *msg, int flags);</span><br></pre></td></tr></table></figure>
+<p>主要封装了两个函数，recv_fd和send_fd。<br>直接上代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">#include&lt;unistd.h&gt;</span><br><span class="line">#include&lt;fcntl.h&gt;</span><br><span class="line">#include&lt;sys/types.h&gt;</span><br><span class="line">#include&lt;sys/socket.h&gt;</span><br><span class="line">#include&quot;comm.h&quot; // 这个文件见上面的例子有</span><br><span class="line"></span><br><span class="line">void send_fd(int sock_fd, int send_fd)</span><br><span class="line">&#123;</span><br><span class="line">    int ret = 0;</span><br><span class="line">    struct msghdr msg;</span><br><span class="line">    struct cmsghdr *p_cmsg;</span><br><span class="line">    struct iovec vec;</span><br><span class="line">    char cmsgbuf[CMSG_SPACE(sizeof(send_fd))];</span><br><span class="line">    int *p_fds;</span><br><span class="line">    char sendchar = 0;</span><br><span class="line">    msg.msg_control = cmsgbuf;</span><br><span class="line">    msg.msg_controllen = sizeof(cmsgbuf);</span><br><span class="line">    </span><br><span class="line">    p_cmsg = CMSG_FIRSTHDR(&amp;msg);</span><br><span class="line">    p_cmsg-&gt;cmsg_level = SOL_SOCKET;</span><br><span class="line">    p_cmsg-&gt;cmsg_type = SCM_RIGHTS;</span><br><span class="line">    p_cmsg-&gt;cmsg_len = CMSG_LEN(sizeof(send_fd));</span><br><span class="line">    p_fds = (int*)CMSG_DATA(p_cmsg);</span><br><span class="line">    *p_fds = send_fd;</span><br><span class="line"></span><br><span class="line">    msg.msg_name = NULL;</span><br><span class="line">    msg.msg_namelen = 0;</span><br><span class="line">    msg.msg_iov = &amp;vec;</span><br><span class="line">    msg.msg_iovlen = 1;</span><br><span class="line">    msg.msg_flags = 0;</span><br><span class="line"></span><br><span class="line">    vec.iov_base = &amp;sendchar;</span><br><span class="line">    vec.iov_len = sizeof(sendchar);</span><br><span class="line">    ret = sendmsg(sock_fd, &amp;msg, 0);</span><br><span class="line">    if(ret &lt; 0)</span><br><span class="line">        ERR_EXIT(&quot;sendmsg&quot;);</span><br><span class="line">&#125;</span><br><span class="line">int recv_fd(const int sock_fd)</span><br><span class="line">&#123;</span><br><span class="line">    int ret = 0;</span><br><span class="line">    struct msghdr msg;</span><br><span class="line">    char recvchar;</span><br><span class="line">    struct iovec vec;</span><br><span class="line">    int recv_fd;</span><br><span class="line">    char cmsgbuf[CMSG_SPACE(sizeof(recv_fd))];</span><br><span class="line">    struct cmsghdr *p_cmsg;</span><br><span class="line">    int *p_fd = NULL;</span><br><span class="line">    vec.iov_base = &amp;recvchar;</span><br><span class="line">    vec.iov_len = sizeof(recvchar);</span><br><span class="line">    msg.msg_name = NULL;</span><br><span class="line">    msg.msg_namelen = 0;</span><br><span class="line">    msg.msg_iov = &amp;vec;</span><br><span class="line">    msg.msg_iovlen = 1;</span><br><span class="line">    msg.msg_control = cmsgbuf;</span><br><span class="line">    msg.msg_controllen = sizeof(cmsgbuf);</span><br><span class="line">    msg.msg_flags = 0;</span><br><span class="line"></span><br><span class="line">    p_fd = (int *)CMSG_DATA(CMSG_FIRSTHDR(&amp;msg));</span><br><span class="line">    *p_fd = -1;</span><br><span class="line">    ret = recvmsg(sock_fd, &amp;msg, 0);</span><br><span class="line">    if(ret &lt; 0)</span><br><span class="line">        ERR_EXIT(&quot;recvmsg&quot;);</span><br><span class="line"></span><br><span class="line">    p_cmsg = CMSG_FIRSTHDR(&amp;msg);</span><br><span class="line">    if(p_cmsg == NULL)</span><br><span class="line">        ERR_EXIT(&quot;no passed fd&quot;);</span><br><span class="line"></span><br><span class="line">    p_fd = (int*)CMSG_DATA(p_cmsg);</span><br><span class="line">    recv_fd = *p_fd;</span><br><span class="line">    if(recv_fd == -1)</span><br><span class="line">        ERR_EXIT(&quot;no passed fd&quot;);</span><br><span class="line">        </span><br><span class="line">    return recv_fd;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">#define OPEN_FILE &quot;test.txt&quot;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    int sockfds[2];</span><br><span class="line">    if(socketpair(PF_UNIX, SOCK_STREAM, 0, sockfds) &lt; 0)</span><br><span class="line">        ERR_EXIT(&quot;socketpair&quot;);</span><br><span class="line">    pid_t pid = fork();</span><br><span class="line">    if(pid &lt; 0)</span><br><span class="line">        ERR_EXIT(&quot;fork&quot;);</span><br><span class="line">    else if(pid &gt; 0)</span><br><span class="line">    &#123;</span><br><span class="line">        close(sockfds[1]);</span><br><span class="line">        char buf[1024] = &#123;0&#125;;</span><br><span class="line">        int fd = recv_fd(sockfds[0]);</span><br><span class="line">        read(fd, buf, sizeof(buf));</span><br><span class="line">        printf(&quot;Get Data:\n%s&quot;, buf);</span><br><span class="line">    &#125;</span><br><span class="line">    else</span><br><span class="line">    &#123;</span><br><span class="line">        close(sockfds[0]);</span><br><span class="line">        int fd = open(OPEN_FILE, O_RDONLY);</span><br><span class="line">        if(fd &lt; 0)</span><br><span class="line">            ERR_EXIT(&quot;open&quot;);</span><br><span class="line">        send_fd(sockfds[1], fd);</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>分析：子进程中打开一个文件描述符，然后通过send_fd发送给主进程，主进程通过recv_fd接收这个文件描述符。再通过这个文件描述符读取文件的内容。</p>
+<p>运行，需要先创建一个test.txt文件，再运行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">xcy@xcy-virtual-machine:~/test/sock14_socketpair$ ./sendfd </span><br><span class="line">Get Data:</span><br><span class="line">I am xiaochongyong</span><br><span class="line">How are you?</span><br><span class="line">I&apos;m fine. And you!</span><br><span class="line">xcy@xcy-virtual-machine:~/test/sock14_socketpair$</span><br></pre></td></tr></table></figure>
+<p>补充：</p>
+<ol>
+<li>虽然文件描述符是一个整形数字，但是单纯发一个数字过去是没有用的。</li>
+<li>普通的TCP UDP套接字是不能传递文件描述符的</li>
+</ol>
+<p><a href="https://www.cnblogs.com/xcywt/p/8196286.html" target="_blank" rel="noopener">link</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/网络编程//" class="article-tag-list-link color5">网络编程</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/11/14/netprogram/UNIX域协议-无名套接字/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-netprogram/UNIX域协议-命名套接字" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
@@ -405,103 +589,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2018/11/14/netprogram/UNIX域协议-命名套接字/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-netprogram/UNIX域协议-无名套接字" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/11/14/netprogram/UNIX域协议-无名套接字/">无名套接字</a>
-    </h1>
-  
-
-        
-        <a href="/2018/11/14/netprogram/UNIX域协议-无名套接字/" class="archive-article-date">
-  	<time datetime="2018-11-14T10:20:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-14</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="1-socketpair函数"><a href="#1-socketpair函数" class="headerlink" title="1.socketpair函数"></a>1.socketpair函数</h3><p>先看man手册：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">SYNOPSIS</span><br><span class="line">       #include &lt;sys/types.h&gt;          /* See NOTES */</span><br><span class="line">       #include &lt;sys/socket.h&gt;</span><br><span class="line"></span><br><span class="line">       int socketpair(int domain, int type, int protocol, int sv[2]);</span><br><span class="line"></span><br><span class="line">DESCRIPTION</span><br><span class="line">       The  socketpair()  call creates an unnamed pair of connected sockets in</span><br><span class="line">       the specified domain, of the specified type, and using  the  optionally</span><br><span class="line">       specified  protocol.   For  further  details  of  these  arguments, see</span><br><span class="line">       socket(2).</span><br><span class="line"></span><br><span class="line">       The descriptors used in referencing the new  sockets  are  returned  in</span><br><span class="line">       sv[0] and sv[1].  The two sockets are indistinguishable.</span><br><span class="line"></span><br><span class="line">RETURN VALUE</span><br><span class="line">       On  success,  zero is returned.  On error, -1 is returned, and errno is</span><br><span class="line">       set appropriately.</span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p>功能：创建一个全双工的流管道<br>参数：<br>domain：协议家族，为AF_LOCAL或AF_UNIX<br>type：套接字类型。可以是SOCK_STREAM或者SOCK_DGRAM。这两种都是可靠的<br>protocol：协议类型。为0<br>sv：返回套接字对，这个是输出参数。返回的两个描述符都是可读可写的。<br>返回值：成功返回0，失败返回-1.<br>补充：pipe创建的匿名管道的半双工的，pipefd[0]用于读，pipefd[1]用于写。<br>注意：由于创建的每个套接字都是没有名字的，这就意味着无关进程不能使用它们。</p>
-</blockquote>
-<h3 id="2-一个简单的例子："><a href="#2-一个简单的例子：" class="headerlink" title="2.一个简单的例子："></a>2.一个简单的例子：</h3><p>父进程给子进程发送一个数据给子进程，子进程收到数据后最数据进行加一操作，再发回给父进程。</p>
-<p>先上自己的一个头文件：<br>comm.h</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#ifndef __COMM_H__</span><br><span class="line">#define __COMM_H__</span><br><span class="line"></span><br><span class="line">#include&lt;errno.h&gt;</span><br><span class="line">#include&lt;stdlib.h&gt;</span><br><span class="line">#define ERR_EXIT(m) \</span><br><span class="line">    do \</span><br><span class="line">    &#123; \</span><br><span class="line">        perror(m); \</span><br><span class="line">        exit(EXIT_FAILURE); \</span><br><span class="line">    &#125; while(0)</span><br><span class="line"></span><br><span class="line">#endif // __COMM_H__</span><br></pre></td></tr></table></figure>
-<p>再上主程序：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">#include&lt;unistd.h&gt;</span><br><span class="line">#include &lt;sys/types.h&gt;          /* See NOTES */</span><br><span class="line">#include &lt;sys/socket.h&gt;</span><br><span class="line"></span><br><span class="line">#include&quot;comm.h&quot;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    int sockfds[2];</span><br><span class="line">    if(socketpair(PF_UNIX, SOCK_STREAM, 0, sockfds) &lt; 0)    </span><br><span class="line">        ERR_EXIT(&quot;sockerpair&quot;);</span><br><span class="line"></span><br><span class="line">    pid_t pid;</span><br><span class="line">    pid = fork();</span><br><span class="line">    if(pid &lt; 0)</span><br><span class="line">        ERR_EXIT(&quot;fork&quot;);</span><br><span class="line">    else if(pid &gt; 0)</span><br><span class="line">    &#123;</span><br><span class="line">        int val = 0;</span><br><span class="line">        close(sockfds[1]);</span><br><span class="line">        while(1)</span><br><span class="line">        &#123;</span><br><span class="line">            ++val;</span><br><span class="line">            printf(&quot;Sending data: %d\n&quot;, val);</span><br><span class="line">            write(sockfds[0], &amp;val, sizeof(val));</span><br><span class="line">            read(sockfds[0], &amp;val, sizeof(val));</span><br><span class="line">            printf(&quot;   Recv data: %d\n&quot;, val);</span><br><span class="line">            sleep(1);</span><br><span class="line">        &#125;    </span><br><span class="line">    &#125;</span><br><span class="line">    else</span><br><span class="line">    &#123;</span><br><span class="line">        close(sockfds[0]);</span><br><span class="line">        int val;</span><br><span class="line">        while(1)</span><br><span class="line">        &#123;</span><br><span class="line">            read(sockfds[1], &amp;val, sizeof(val));</span><br><span class="line">            ++val;</span><br><span class="line">            write(sockfds[1], &amp;val, sizeof(val));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>运行：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">@xcy-virtual-machine:~/test/sock14_socketpair$ ./sockpair </span><br><span class="line">Sending data: 1</span><br><span class="line">   Recv data: 2</span><br><span class="line">Sending data: 3</span><br><span class="line">   Recv data: 4</span><br><span class="line">Sending data: 5</span><br><span class="line">   Recv data: 6</span><br><span class="line">Sending data: 7</span><br><span class="line">   Recv data: 8</span><br><span class="line">Sending data: 9</span><br><span class="line">   Recv data: 10</span><br><span class="line">Sending data: 11</span><br><span class="line">   Recv data: 12</span><br><span class="line">Sending data: 13</span><br><span class="line">   Recv data: 14</span><br></pre></td></tr></table></figure>
-<h3 id="3-UNIX域传递文件描述符"><a href="#3-UNIX域传递文件描述符" class="headerlink" title="3.UNIX域传递文件描述符"></a>3.UNIX域传递文件描述符</h3><p>需要用到sendmsg和recvmsg函数：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;sys/types.h&gt;</span><br><span class="line">#include &lt;sys/socket.h&gt;</span><br><span class="line">ssize_t sendmsg(int sockfd, const struct msghdr *msg, int flags);</span><br><span class="line">ssize_t recvmsg(int sockfd, struct msghdr *msg, int flags);</span><br></pre></td></tr></table></figure>
-<p>主要封装了两个函数，recv_fd和send_fd。<br>直接上代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">#include&lt;unistd.h&gt;</span><br><span class="line">#include&lt;fcntl.h&gt;</span><br><span class="line">#include&lt;sys/types.h&gt;</span><br><span class="line">#include&lt;sys/socket.h&gt;</span><br><span class="line">#include&quot;comm.h&quot; // 这个文件见上面的例子有</span><br><span class="line"></span><br><span class="line">void send_fd(int sock_fd, int send_fd)</span><br><span class="line">&#123;</span><br><span class="line">    int ret = 0;</span><br><span class="line">    struct msghdr msg;</span><br><span class="line">    struct cmsghdr *p_cmsg;</span><br><span class="line">    struct iovec vec;</span><br><span class="line">    char cmsgbuf[CMSG_SPACE(sizeof(send_fd))];</span><br><span class="line">    int *p_fds;</span><br><span class="line">    char sendchar = 0;</span><br><span class="line">    msg.msg_control = cmsgbuf;</span><br><span class="line">    msg.msg_controllen = sizeof(cmsgbuf);</span><br><span class="line">    </span><br><span class="line">    p_cmsg = CMSG_FIRSTHDR(&amp;msg);</span><br><span class="line">    p_cmsg-&gt;cmsg_level = SOL_SOCKET;</span><br><span class="line">    p_cmsg-&gt;cmsg_type = SCM_RIGHTS;</span><br><span class="line">    p_cmsg-&gt;cmsg_len = CMSG_LEN(sizeof(send_fd));</span><br><span class="line">    p_fds = (int*)CMSG_DATA(p_cmsg);</span><br><span class="line">    *p_fds = send_fd;</span><br><span class="line"></span><br><span class="line">    msg.msg_name = NULL;</span><br><span class="line">    msg.msg_namelen = 0;</span><br><span class="line">    msg.msg_iov = &amp;vec;</span><br><span class="line">    msg.msg_iovlen = 1;</span><br><span class="line">    msg.msg_flags = 0;</span><br><span class="line"></span><br><span class="line">    vec.iov_base = &amp;sendchar;</span><br><span class="line">    vec.iov_len = sizeof(sendchar);</span><br><span class="line">    ret = sendmsg(sock_fd, &amp;msg, 0);</span><br><span class="line">    if(ret &lt; 0)</span><br><span class="line">        ERR_EXIT(&quot;sendmsg&quot;);</span><br><span class="line">&#125;</span><br><span class="line">int recv_fd(const int sock_fd)</span><br><span class="line">&#123;</span><br><span class="line">    int ret = 0;</span><br><span class="line">    struct msghdr msg;</span><br><span class="line">    char recvchar;</span><br><span class="line">    struct iovec vec;</span><br><span class="line">    int recv_fd;</span><br><span class="line">    char cmsgbuf[CMSG_SPACE(sizeof(recv_fd))];</span><br><span class="line">    struct cmsghdr *p_cmsg;</span><br><span class="line">    int *p_fd = NULL;</span><br><span class="line">    vec.iov_base = &amp;recvchar;</span><br><span class="line">    vec.iov_len = sizeof(recvchar);</span><br><span class="line">    msg.msg_name = NULL;</span><br><span class="line">    msg.msg_namelen = 0;</span><br><span class="line">    msg.msg_iov = &amp;vec;</span><br><span class="line">    msg.msg_iovlen = 1;</span><br><span class="line">    msg.msg_control = cmsgbuf;</span><br><span class="line">    msg.msg_controllen = sizeof(cmsgbuf);</span><br><span class="line">    msg.msg_flags = 0;</span><br><span class="line"></span><br><span class="line">    p_fd = (int *)CMSG_DATA(CMSG_FIRSTHDR(&amp;msg));</span><br><span class="line">    *p_fd = -1;</span><br><span class="line">    ret = recvmsg(sock_fd, &amp;msg, 0);</span><br><span class="line">    if(ret &lt; 0)</span><br><span class="line">        ERR_EXIT(&quot;recvmsg&quot;);</span><br><span class="line"></span><br><span class="line">    p_cmsg = CMSG_FIRSTHDR(&amp;msg);</span><br><span class="line">    if(p_cmsg == NULL)</span><br><span class="line">        ERR_EXIT(&quot;no passed fd&quot;);</span><br><span class="line"></span><br><span class="line">    p_fd = (int*)CMSG_DATA(p_cmsg);</span><br><span class="line">    recv_fd = *p_fd;</span><br><span class="line">    if(recv_fd == -1)</span><br><span class="line">        ERR_EXIT(&quot;no passed fd&quot;);</span><br><span class="line">        </span><br><span class="line">    return recv_fd;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">#define OPEN_FILE &quot;test.txt&quot;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    int sockfds[2];</span><br><span class="line">    if(socketpair(PF_UNIX, SOCK_STREAM, 0, sockfds) &lt; 0)</span><br><span class="line">        ERR_EXIT(&quot;socketpair&quot;);</span><br><span class="line">    pid_t pid = fork();</span><br><span class="line">    if(pid &lt; 0)</span><br><span class="line">        ERR_EXIT(&quot;fork&quot;);</span><br><span class="line">    else if(pid &gt; 0)</span><br><span class="line">    &#123;</span><br><span class="line">        close(sockfds[1]);</span><br><span class="line">        char buf[1024] = &#123;0&#125;;</span><br><span class="line">        int fd = recv_fd(sockfds[0]);</span><br><span class="line">        read(fd, buf, sizeof(buf));</span><br><span class="line">        printf(&quot;Get Data:\n%s&quot;, buf);</span><br><span class="line">    &#125;</span><br><span class="line">    else</span><br><span class="line">    &#123;</span><br><span class="line">        close(sockfds[0]);</span><br><span class="line">        int fd = open(OPEN_FILE, O_RDONLY);</span><br><span class="line">        if(fd &lt; 0)</span><br><span class="line">            ERR_EXIT(&quot;open&quot;);</span><br><span class="line">        send_fd(sockfds[1], fd);</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>分析：子进程中打开一个文件描述符，然后通过send_fd发送给主进程，主进程通过recv_fd接收这个文件描述符。再通过这个文件描述符读取文件的内容。</p>
-<p>运行，需要先创建一个test.txt文件，再运行：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">xcy@xcy-virtual-machine:~/test/sock14_socketpair$ ./sendfd </span><br><span class="line">Get Data:</span><br><span class="line">I am xiaochongyong</span><br><span class="line">How are you?</span><br><span class="line">I&apos;m fine. And you!</span><br><span class="line">xcy@xcy-virtual-machine:~/test/sock14_socketpair$</span><br></pre></td></tr></table></figure>
-<p>补充：</p>
-<ol>
-<li>虽然文件描述符是一个整形数字，但是单纯发一个数字过去是没有用的。</li>
-<li>普通的TCP UDP套接字是不能传递文件描述符的</li>
-</ol>
-<p><a href="https://www.cnblogs.com/xcywt/p/8196286.html" target="_blank" rel="noopener">link</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/网络编程//" class="article-tag-list-link color5">网络编程</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/11/14/netprogram/UNIX域协议-无名套接字/">展开全文 >></a>
         </p>
       
 
