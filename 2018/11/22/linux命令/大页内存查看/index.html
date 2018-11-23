@@ -16,12 +16,12 @@
 <meta property="og:site_name" content="一只小蚂蚁">
 <meta property="og:description" content="##buddy算法 ###Buddy（伙伴的定义）： 这里给出伙伴的概念，满足以下三个条件的称为伙伴：1231）两个块大小相同；2）两个块地址连续；3）两个块必须是同一个大块中分离出来的； ###Buddy算法的分配原理：  假如系统需要4(22)个页面大小的内存块，该算法就到free_area[2]中查找，如果链表中有空闲块，就直接从中摘下并分配出去。如果没有，算法将顺着数组向上查找free_a">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/2018/11/22/linux命令/大页内存查看/source/_posts/images/1.jpg">
-<meta property="og:updated_time" content="2018-11-23T07:52:19.000Z">
+<meta property="og:image" content="http://yoursite.com/source/_posts/images/1.jpg">
+<meta property="og:updated_time" content="2018-11-23T07:54:27.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="大页内存查看">
 <meta name="twitter:description" content="##buddy算法 ###Buddy（伙伴的定义）： 这里给出伙伴的概念，满足以下三个条件的称为伙伴：1231）两个块大小相同；2）两个块地址连续；3）两个块必须是同一个大块中分离出来的； ###Buddy算法的分配原理：  假如系统需要4(22)个页面大小的内存块，该算法就到free_area[2]中查找，如果链表中有空闲块，就直接从中摘下并分配出去。如果没有，算法将顺着数组向上查找free_a">
-<meta name="twitter:image" content="http://yoursite.com/2018/11/22/linux命令/大页内存查看/source/_posts/images/1.jpg">
+<meta name="twitter:image" content="http://yoursite.com/source/_posts/images/1.jpg">
   
     <link rel="alternative" href="/atom.xml" title="一只小蚂蚁" type="application/atom+xml">
   
@@ -203,7 +203,7 @@
 <p>假如系统需要4(2<em>2)个页面大小的内存块，该算法就到free_area[2]中查找，如果链表中有空闲块，就直接从中摘下并分配出去。如果没有，算法将顺着数组向上查找free_area[3],如果free_area[3]中有空闲块，则将其从链表中摘下，分成等大小的两部分，前四个页面作为一个块插入free_area[2]，后4个页面分配出去，free_area[3]中也没有，就再向上查找，如果free_area[4]中有，就将这16(2</em>2<em>2</em>2)个页面等分成两份，前一半挂如free_area[3]的链表头部，后一半的8个页等分成两等分，前一半挂free_area[2]<br>的链表中，后一半分配出去。假如free_area[4]也没有，则重复上面的过程，知道到达free_area数组的最后，如果还没有则放弃分配。</p>
 </blockquote>
 <p>###Buddy算法的释放原理：</p>
-<p>内存的释放是分配的逆过程，也可以看作是伙伴的合并过程。当释放一个块时，先在其对应的链表中考查是否有伙伴存在，如果没有伙伴块，就直接把要释放的块挂入链表头；如果有，则从链表中摘下伙伴，合并成一个大块，然后继续考察合并后的块在更大一级链表中是否有伙伴存在，直到不能合并或者已经合并到了最大的块(2<em>2</em>2<em>2</em>2<em>2</em>2<em>2</em>2个页面)。<br><img src="./source/_posts/images/1.jpg" alt="image"></p>
+<p>内存的释放是分配的逆过程，也可以看作是伙伴的合并过程。当释放一个块时，先在其对应的链表中考查是否有伙伴存在，如果没有伙伴块，就直接把要释放的块挂入链表头；如果有，则从链表中摘下伙伴，合并成一个大块，然后继续考察合并后的块在更大一级链表中是否有伙伴存在，直到不能合并或者已经合并到了最大的块(2<em>2</em>2<em>2</em>2<em>2</em>2<em>2</em>2个页面)。<br><img src="/source/_posts/images/1.jpg" alt="image"></p>
 <p>##linux应用</p>
 <blockquote>
 <p>在linux中使用buddy算法解决物理内存的外碎片问题，其把所有空闲的内存，以2的幂次方的形式，分成11个块链表，分别对应为1、2、4、8、16、32、64、128、256、512、102个页块</p>
